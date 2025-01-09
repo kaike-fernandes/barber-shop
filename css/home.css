@@ -1,0 +1,85 @@
+body {
+  background-color: #000;
+}
+
+.container {
+  justify-content: center;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 50px;
+  background-color: none;
+  border-radius: 20px;
+  /* box-shadow: 4px 4px 4px 4px #f8f8f8; */
+}
+
+.box-text {
+  color: #fff;
+  margin: 30px 0px 30px 0px;
+  text-align: center;
+}
+
+.titleLogin {
+  font-size: larger;
+  margin-bottom: 20px;
+}
+
+.textLogin {
+  font-size: medium;
+  margin-bottom: 20px;
+}
+
+.box-form {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+}
+
+.box-login {
+  margin: auto;
+  padding: 10px;
+}
+
+#form-login {
+  width: 400px;
+}
+
+.form-group {
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+}
+
+.btnLogin{
+  width: 100%;
+}
+
+.btn_login {
+  width: 100%;
+}
+
+.box-account {
+  margin: 10px;
+}
+
+.add-account {
+  font-size: small;
+  cursor: pointer;
+}
+
+.add-account:hover {
+  font-weight: bold;
+  color: rgb(79, 79, 79);
+}
+
+.forgot-pass {
+  font-size: small;
+  cursor: pointer;
+}
+
+.forgot-pass:hover {
+  font-weight: bold;
+  color: rgb(79, 79, 79);
+}
+
+
+/* CSS MODAL */
+
