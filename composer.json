@@ -1,0 +1,17 @@
+{
+    "name": "kaike.fernandes/barber-shop",
+    "autoload": {
+        "psr-4": {
+            "KaikeFernandes\\BarberShop\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kaike.fernandes",
+            "email": "kaike.fernandes@meuinc.com.br"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
