@@ -8,20 +8,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
-  <!-- NAVBAR
-  <nav class="navbar bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white" href="#">
-        <i class="bi bi-scissors"></i>
-        Bootstrap
-      </a>
-    </div>
-  </nav> -->
-
   <div class="container">
 
     <div class="box-text">
@@ -138,6 +129,14 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
+                  <label for="cpf_user">Informe seu CPF:</label>
+                  <input type="text" maxlength="14" class="form-control" id="cpf_user">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
                   <label for="email_user">Informe seu e-mail:</label>
                   <input type="email" class="form-control" id="email_user">
                 </div>
@@ -153,12 +152,14 @@
               <div class="col">
                 <div class="form-group">
                   <label for="email_user">Senha:</label>
+                  <!-- <i class="bi bi-eye-slash-fill" id="olho_senha"></i> -->
                   <input type="password" class="form-control" id="senha_user">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
                   <label for="telefone_user">Confirme sua senha:</label>
+                  <!-- <i class="bi bi-eye-slash-fill" id="olho_confirma_senha"></i> -->
                   <input type="password" class="form-control" id="confirma_senha_user">
                 </div>
               </div>
@@ -167,13 +168,35 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+          <button type="button" id="cadastro_usuario" class="btn btn-primary">Confirmar Cadastro</button>
         </div>
       </div>
+    </div>
+
+  <!-- TOAST BOOTSTRAP -->
+  <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
+    <div class="d-flex">
+      <div class="toast-body">
+        Hello, world! This is a toast message.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- TOAST BOOTSTRAP -->
+  <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
+    <div class="d-flex">
+      <div class="toast-body">
+        As senhas informadas não estão iguais.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 </html>
@@ -211,6 +234,44 @@
 
     $(`#addAccount`).on('click', function() {
       $(`#staticModalCadastro`).modal('show');
+    })
+
+    $(`#cadastro_usuario`).on('click', function() {
+      console.log("teste");
+      let nome = $(`#nome_user`).val();
+      let cpf = $(`#cpf_user`).val();
+      let email = $(`#email_user`).val();
+      let telefone = $(`#telefone_user`).val();
+      let senha = $(`#senha_user`).val();
+      let confirm_senha = $(`#confirma_senha_user`).val();
+
+      if (senha != confirm_senha) {
+        console.log("senha diferente")
+        const toast = $(`#toastHome`);
+        toast.show(500);
+        setTimeout(function () {
+          toast.hide(500);
+        }, 3000);
+        return;
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: 'cadastro.php',
+          cache: false,
+          data: {
+            nome_usuario: nome,
+            cpf_usuario: cpf,
+            email_usuario: email,
+            telefone_usuario: telefone,
+            senha_usuario: senha,
+          },
+
+          success: function(data) {
+            console.log("passou as informações");
+            console.log(data);
+          }
+        })
+      }
     })
 
   });
