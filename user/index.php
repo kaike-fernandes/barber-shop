@@ -173,26 +173,16 @@
       </div>
     </div>
 
-  <!-- TOAST BOOTSTRAP -->
-  <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
-    <div class="d-flex">
-      <div class="toast-body">
-        Hello, world! This is a toast message.
+    <!-- TOAST BOOTSTRAP -->
+    <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
+      <div class="d-flex">
+        <div class="toast-body">
+          <span class="text-toast" id="text_toast"></span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-  </div>
 
-  </div>
-
-  <!-- TOAST BOOTSTRAP -->
-  <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
-    <div class="d-flex">
-      <div class="toast-body">
-        As senhas informadas não estão iguais.
-      </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -237,7 +227,7 @@
     })
 
     $(`#cadastro_usuario`).on('click', function() {
-      console.log("teste");
+
       let nome = $(`#nome_user`).val();
       let cpf = $(`#cpf_user`).val();
       let email = $(`#email_user`).val();
@@ -245,11 +235,11 @@
       let senha = $(`#senha_user`).val();
       let confirm_senha = $(`#confirma_senha_user`).val();
 
+      const toast = $(`#toastHome`);
+
       if (senha != confirm_senha) {
-        console.log("senha diferente")
-        const toast = $(`#toastHome`);
         toast.show(500);
-        setTimeout(function () {
+        setTimeout(function() {
           toast.hide(500);
         }, 3000);
         return;
@@ -267,8 +257,29 @@
           },
 
           success: function(data) {
-            console.log("passou as informações");
-            console.log(data);
+            toast.show(500);
+            $(`#text_toast`).html(data.message);
+            $(`#toastHome`).removeClass('text-bg-warning');
+            $(`#toastHome`).addClass('text-bg-success');
+          },
+
+          complete: function() {
+
+            $(`#nome_user`).val("");
+            $(`#cpf_user`).val("");
+            $(`#email_user`).val("");
+            $(`#telefone_user`).val("");
+            $(`#senha_user`).val("");
+            $(`#confirma_senha_user`).val("");
+
+            setTimeout(function() {
+              $(`#staticModalCadastro`).modal('hide');
+              toast.hide(500);
+            }, 3000);
+          },
+
+          error: function(erro) {
+            console.log("algo deu errado");
           }
         })
       }
