@@ -1,20 +1,32 @@
-<!doctype html>
-<html lang="en">
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+header('Content-Type: application/json');
+require_once('../connection/db.php');
+require_once('../functions/functions.php');
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Barber Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="../css/cadastro.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-    
-    <div class="container">
+if (!empty($_POST) && isset($_POST)) {
+  // echo "<pre>";
+  // print_r($_POST);
+  // echo "</pre>";
 
-    </div>
+  $nome = $_POST['nome_usuario'];
+  $cpf = $_POST['cpf_usuario'];
+  $email = $_POST['email_usuario'];
+  $telefone = $_POST['telefone_usuario'];
+  $senha = $_POST['senha_usuario'];
 
-</body>
-</html>
+  // CRIA HASH DA SENHA
+  $opt = [
+    'cost' => 12,
+  ];
+
+  $senha_hash = password_hash($senha, PASSWORD_BCRYPT, $opt);
+  
+  $res = cadastrarUsuario($nome, $cpf, $email, $telefone, $senha_hash);
+  print_r(json_encode($res));
+
+}
+
+?>
