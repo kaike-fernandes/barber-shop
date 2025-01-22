@@ -2,7 +2,7 @@
 $(`#cpf_user`).mask("999.999.999-99");
 $(`#telefone_user`).mask("(99) 99999-9999");
 
-
+// LOGIN USER
 $(document).ready(function (){
     $(`#btnLogin`).on('click', function(event) {
         event.preventDefault();
@@ -23,16 +23,26 @@ $(document).ready(function (){
             },
     
             success: function(data) {
-            console.log("Dados enviados!")
+                console.log("Dados enviados!")
             },
     
             error: function(error) {
-            console.log("Não enviou nada.");
+                console.log("Não enviou nada.");
             }
         })
     });
 });
 
+function limpaModalCadastro() {
+    $(`#nome_user`).val("");
+    $(`#cpf_user`).val("");
+    $(`#email_user`).val("");
+    $(`#telefone_user`).val("");
+    $(`#senha_user`).val("");
+    $(`#confirma_senha_user`).val("");
+}
+
+// CADASTRO USER
 $(`#addAccount`).on('click', function() {
     $(`#staticModalCadastro`).modal('show');
 })
@@ -45,16 +55,20 @@ $(document).ready(function () {
         let telefone = $(`#telefone_user`).val();
         let senha = $(`#senha_user`).val();
         let confirm_senha = $(`#confirma_senha_user`).val();
+
+        if (nome == "" || cpf == "" || email == "" || telefone == "") {
+            exibirToast("Preencha todos os campos para se cadastrar.", '#FFCC00');
+            return;
+        };
     
-        const toast = $(`#toastHome`);
-    
+
         if (senha != confirm_senha) {
             exibirToast('As senhas informadas não são iguais.', '#FFCC00')
             return;
         } else {
             $.ajax({
                 type: 'POST',
-                url: 'cadastro.php',
+                url: './user/cadastro.php',
                 cache: false,
                 data: {
                     nome_usuario: nome,
@@ -81,12 +95,20 @@ $(document).ready(function () {
                 },
     
                 error: function(erro) {
-                    console.log("algo deu errado");
+                    exibirToast("Algo deu errado", '#CC3300')
                 }
             })
         }
     });
 });
+
+
+// RECUPERAR SENHA USER
+$(`#forgotPass`).on('click', function () {
+    $(`#staticModalRecuSenha`).modal('show');
+});
+
+
 
 // func para visualizar senha campo de cadastro
 function visualizarSenha(idIcon, idInput) {
@@ -122,4 +144,40 @@ function exibirToast(message, color) {
         },
         // onClick: function(){} // Callback after click
       }).showToast();
+}
+
+// VALIDA CPF
+function validarCpf(token, cpf, idInput) {
+
+    $.ajax({
+        url: 'https://api.invertexto.com/v1/validator',
+        method: 'GET',
+        data: {
+            token: token,
+            value: cpf,
+            type: 'cpf',
+        },
+
+        success: function(data) {
+            if (data.valid) {
+                console.log('CPF é válido!');
+                $(`#` + idInput).addClass('is-valid')
+
+            } else {
+                console.log('CPF é inválido.');
+                $(`#` + idInput).addClass('is-invalid')
+            }
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $(`#` + idInput).removeClass('is-valid')
+                $(`#` + idInput).removeClass('is-invalid')
+            }, 3000)
+        },
+
+        error: function(error) {
+            console.error('Erro na requisição:', error);
+        }
+    })
 }

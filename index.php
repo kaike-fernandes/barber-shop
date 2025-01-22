@@ -1,3 +1,20 @@
+<?php
+
+require 'vendor/autoload.php';
+use Dotenv\Dotenv;
+
+// pegar variaveis de ambiente
+$dotenv = Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
+if (!file_exists('.env')) {
+  die('Arquivo .env não encontrado!');
+} else {
+  $token = $_ENV['TOKEN_API'];
+}
+
+?>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cadastro</title>
@@ -83,7 +100,7 @@
     <div class="box-account">
       <div class="row">
         <div class="col text-center">
-          <span class="forgot-pass">Esqueci a senha?</span>
+          <span class="forgot-pass" id="forgotPass">Esqueci a senha?</span>
         </div>
         <div class="col text-center p-0 m-0">
           <b>|</b>
@@ -93,24 +110,19 @@
         </div>
       </div>
     </div>
-
   </form>
 </div>
 </div>
 
 
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button> -->
 
-<!-- Modal -->
+<!-- Modal  Cadastro -->
 <div class="modal fade" id="staticModalCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro de Usuário</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="iconCloseModal" onclick="limpaModalCadastro()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="boxModal">
@@ -126,7 +138,7 @@
             <div class="col">
               <div class="form-group">
                 <label for="cpf_user">Informe seu CPF:</label>
-                <input type="text" maxlength="14" class="form-control" id="cpf_user" placeholder="XXX.XXX.XXX-XX">
+                <input type="text" maxlength="14" class="form-control" id="cpf_user" minlength="14" placeholder="XXX.XXX.XXX-XX" onblur="validarCpf('<?php echo $_ENV['TOKEN_API'] ?>', this.value, this.id)">
               </div>
             </div>
           </div>
@@ -149,7 +161,7 @@
               <div class="form-group">
                 <label for="email_user">Senha:</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="senha_user" placeholder="Digite sua senha" maxlength="8">
+                  <input type="password" class="form-control" id="senha_user" placeholder="Digite sua senha" maxlength="8" autocomplete="new-password">
                   <button type="button" class="btn btn-dark" id="toggle_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#senha_user`).attr('id'))">
                     <i class="bi bi-eye-slash-fill" id="olho_senha"></i>
                   </button>
@@ -160,7 +172,7 @@
               <div class="form-group">
                 <label for="telefone_user">Confirme sua senha:</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="confirma_senha_user" placeholder="Confirme sua senha" maxlength="8">
+                  <input type="password" class="form-control" id="confirma_senha_user" placeholder="Confirme sua senha" maxlength="8" autocomplete="new-password">
                   <button type="button" class="btn btn-dark" id="toggle_confirm_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#confirma_senha_user`).attr('id'))">
                     <i class="bi bi-eye-slash-fill" id="olho_confirma_senha"></i>
                   </button>
@@ -171,23 +183,57 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-secondary" id="btnFecharModal" onclick="limpaModalCadastro()" data-bs-dismiss="modal">Fechar</button>
         <button type="button" id="cadastro_usuario" class="btn btn-primary">Confirmar Cadastro</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- TOAST BOOTSTRAP -->
-  <div class="toast align-items-center text-bg-warning border-0" id="toastHome" role="alert" aria-live="assertive" aria-atomic="true" style="margin-left: 30px;">
-    <div class="d-flex">
-      <div class="toast-body">
-        <span class="text-toast" id="text_toast"></span>
+<!-- Modal Recuperar Senha -->
+<div class="modal fade" id="staticModalRecuSenha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Recuperar senha</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="modal-body">
+        <div class="modal-body">
+          <div class="boxModal">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <p class="text-center">Preencha os dados abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="nome_user">Informe seu CPF:</label>
+                  <input type="text" class="form-control" id="nome_user" placeholder="Nome completo">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="cpf_user">Informe seu e-mail:</label>
+                  <input type="text" maxlength="14" class="form-control" id="cpf_user" placeholder="XXX.XXX.XXX-XX">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Recuperar Senha</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/script.js"></script>
