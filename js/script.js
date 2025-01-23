@@ -1,5 +1,4 @@
 // MÁSCARAS
-$(`#cpf_user`).mask("999.999.999-99");
 $(`#telefone_user`).mask("(99) 99999-9999");
 
 // LOGIN USER
@@ -35,7 +34,6 @@ $(document).ready(function (){
 
 function limpaModalCadastro() {
     $(`#nome_user`).val("");
-    $(`#cpf_user`).val("");
     $(`#email_user`).val("");
     $(`#telefone_user`).val("");
     $(`#senha_user`).val("");
@@ -50,52 +48,71 @@ $(document).ready(function () {
     $(`#cadastro_usuario`).on('click', function() {
     
         let nome = $(`#nome_user`).val();
-        let cpf = $(`#cpf_user`).val();
         let email = $(`#email_user`).val();
         let telefone = $(`#telefone_user`).val();
         let senha = $(`#senha_user`).val();
         let confirm_senha = $(`#confirma_senha_user`).val();
 
-        if (nome == "" || cpf == "" || email == "" || telefone == "") {
+        if (nome == "" || email == "" || telefone == "" || senha == "" || confirm_senha == "") {
             exibirToast("Preencha todos os campos para se cadastrar.", '#FFCC00');
             return;
         };
-    
 
         if (senha != confirm_senha) {
-            exibirToast('As senhas informadas não são iguais.', '#FFCC00')
+            exibirToast('As senhas informadas não são iguais.', '#CC3300')
             return;
         } else {
+
             $.ajax({
                 type: 'POST',
                 url: './user/cadastro.php',
                 cache: false,
                 data: {
-                    nome_usuario: nome,
-                    cpf_usuario: cpf,
-                    email_usuario: email,
-                    telefone_usuario: telefone,
-                    senha_usuario: senha,
+                    email: email,
+                    tipo: 'validar'
                 },
-    
-                success: function(data) {
-                    exibirToast(data.message, '#99CC33')
-                },
-    
-                complete: function() {
-    
-                    $(`#nome_user`).val("");
-                    $(`#cpf_user`).val("");
-                    $(`#email_user`).val("");
-                    $(`#telefone_user`).val("");
-                    $(`#senha_user`).val("");
-                    $(`#confirma_senha_user`).val("");
 
-                    $(`#staticModalCadastro`).modal('hide');                    
+                success: function (data) {
+                    if (data == true){
+                        exibirToast('Esse email já foi cadastrado, insira outro.', '#CC3300');
+                        return;
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: './user/cadastro.php',
+                            cache: false,
+                            data: {
+                                nome_usuario: nome,
+                                email_usuario: email,
+                                telefone_usuario: telefone,
+                                senha_usuario: senha,
+                                tipo: 'cadastro',
+                            },
+                
+                            success: function(data) {
+                                exibirToast(data.message, '#99CC33')
+                            },
+                
+                            complete: function() {
+                
+                                $(`#nome_user`).val("");
+                                $(`#email_user`).val("");
+                                $(`#telefone_user`).val("");
+                                $(`#senha_user`).val("");
+                                $(`#confirma_senha_user`).val("");
+            
+                                $(`#staticModalCadastro`).modal('hide');                    
+                            },
+                
+                            error: function(erro) {
+                                exibirToast("Algo deu errado", '#CC3300')
+                            }
+                        })
+                    }
                 },
-    
-                error: function(erro) {
-                    exibirToast("Algo deu errado", '#CC3300')
+
+                error: function (erro) {
+                    exibirToast("Algo deu errado", '#CC3300');
                 }
             })
         }
@@ -107,8 +124,6 @@ $(document).ready(function () {
 $(`#forgotPass`).on('click', function () {
     $(`#staticModalRecuSenha`).modal('show');
 });
-
-
 
 // func para visualizar senha campo de cadastro
 function visualizarSenha(idIcon, idInput) {
@@ -144,40 +159,4 @@ function exibirToast(message, color) {
         },
         // onClick: function(){} // Callback after click
       }).showToast();
-}
-
-// VALIDA CPF
-function validarCpf(token, cpf, idInput) {
-
-    $.ajax({
-        url: 'https://api.invertexto.com/v1/validator',
-        method: 'GET',
-        data: {
-            token: token,
-            value: cpf,
-            type: 'cpf',
-        },
-
-        success: function(data) {
-            if (data.valid) {
-                console.log('CPF é válido!');
-                $(`#` + idInput).addClass('is-valid')
-
-            } else {
-                console.log('CPF é inválido.');
-                $(`#` + idInput).addClass('is-invalid')
-            }
-        },
-
-        complete: function () {
-            setTimeout(function () {
-                $(`#` + idInput).removeClass('is-valid')
-                $(`#` + idInput).removeClass('is-invalid')
-            }, 3000)
-        },
-
-        error: function(error) {
-            console.error('Erro na requisição:', error);
-        }
-    })
 }

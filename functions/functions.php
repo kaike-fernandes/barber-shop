@@ -5,7 +5,7 @@
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 
-function cadastrarUsuario($nome, $cpf, $email, $telefone, $senha)
+function cadastrarUsuario($nome, $email, $telefone, $senha)
 {
 
     global $pdo;
@@ -13,15 +13,13 @@ function cadastrarUsuario($nome, $cpf, $email, $telefone, $senha)
     try {
         $sql = "INSERT INTO 
                 usuarios (
-                    NOME, 
-                    CPF, 
+                    NOME,
                     EMAIL, 
                     TELEFONE, 
                     SENHA, 
                     DATA_CADASTRO
                 ) VALUES (
                     :nome_usuario, 
-                    :cpf_usuario, 
                     :email_usuario, 
                     :telefone_usuario, 
                     :senha_usuario,
@@ -30,7 +28,6 @@ function cadastrarUsuario($nome, $cpf, $email, $telefone, $senha)
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':nome_usuario', $nome);
-        $stmt->bindParam(':cpf_usuario', $cpf);
         $stmt->bindParam(':email_usuario', $email);
         $stmt->bindParam(':telefone_usuario', $telefone);
         $stmt->bindParam(':senha_usuario', $senha);
@@ -44,5 +41,32 @@ function cadastrarUsuario($nome, $cpf, $email, $telefone, $senha)
         }
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
+    }
+}
+
+
+function validarEmailExiste($email)
+{
+
+    global $pdo;
+
+    $sql = "SELECT EMAIL FROM usuarios WHERE EMAIL = :email";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email);
+
+    $res = $stmt->execute();
+    
+    if ($res) {
+        $returnArray = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $returnArray[] = $row;
+        }
+    }
+
+    if (count($returnArray) > 0) {
+        return true;
+    } else {
+        return false;
     }
 }

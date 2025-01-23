@@ -7,26 +7,29 @@ require_once('../connection/db.php');
 require_once('../functions/functions.php');
 
 if (!empty($_POST) && isset($_POST)) {
-  // echo "<pre>";
-  // print_r($_POST);
-  // echo "</pre>";
 
-  $nome = $_POST['nome_usuario'];
-  $cpf = $_POST['cpf_usuario'];
-  $email = $_POST['email_usuario'];
-  $telefone = $_POST['telefone_usuario'];
-  $senha = $_POST['senha_usuario'];
+  if ($_POST['tipo'] == 'validar') {
 
-  // CRIA HASH DA SENHA
-  $opt = [
-    'cost' => 12,
-  ];
+    $email = $_POST['email'];
+    $temEmail = validarEmailExiste($email);
+    echo json_encode($temEmail);
 
-  $senha_hash = password_hash($senha, PASSWORD_BCRYPT, $opt);
-  
-  $res = cadastrarUsuario($nome, $cpf, $email, $telefone, $senha_hash);
-  print_r(json_encode($res));
+  } else if ($_POST['tipo'] == 'cadastro') {
 
+    $nome = $_POST['nome_usuario'];
+    $email = $_POST['email_usuario'];
+    $telefone = $_POST['telefone_usuario'];
+    $senha = $_POST['senha_usuario'];
+
+    // CRIA HASH DA SENHA
+    $opt = [
+      'cost' => 12,
+    ];
+
+    $senha_hash = password_hash($senha, PASSWORD_BCRYPT, $opt);
+
+    $res = cadastrarUsuario($nome, $email, $telefone, $senha_hash);
+    print_r(json_encode($res));
+  }
 }
-
 ?>
