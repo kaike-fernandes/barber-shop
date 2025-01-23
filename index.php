@@ -1,20 +1,3 @@
-<?php
-
-require 'vendor/autoload.php';
-use Dotenv\Dotenv;
-
-// pegar variaveis de ambiente
-$dotenv = Dotenv::createUnsafeImmutable(__DIR__);
-$dotenv->load();
-
-if (!file_exists('.env')) {
-  die('Arquivo .env não encontrado!');
-} else {
-  $token = $_ENV['TOKEN_API'];
-}
-
-?>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cadastro</title>
@@ -137,18 +120,12 @@ if (!file_exists('.env')) {
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label for="cpf_user">Informe seu CPF:</label>
-                <input type="text" maxlength="14" class="form-control" id="cpf_user" minlength="14" placeholder="XXX.XXX.XXX-XX" onblur="validarCpf('<?php echo $_ENV['TOKEN_API'] ?>', this.value, this.id)">
+                <label for="email_user">Informe seu e-mail:</label>
+                <input type="email" class="form-control" id="email_user" placeholder="email@gmail.com">
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="email_user">Informe seu e-mail:</label>
-                <input type="email" class="form-control" id="email_user" placeholder="seuemail@gmail.com">
-              </div>
-            </div>
             <div class="col">
               <div class="form-group">
                 <label for="telefone_user">Informe seu telefone:</label>
@@ -211,16 +188,8 @@ if (!file_exists('.env')) {
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="nome_user">Informe seu CPF:</label>
-                  <input type="text" class="form-control" id="nome_user" placeholder="Nome completo">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="cpf_user">Informe seu e-mail:</label>
-                  <input type="text" maxlength="14" class="form-control" id="cpf_user" placeholder="XXX.XXX.XXX-XX">
+                  <label for="email_rec_senha">Informe seu e-mail:</label>
+                  <input type="email" class="form-control" id="email_rec_senha">
                 </div>
               </div>
             </div>
