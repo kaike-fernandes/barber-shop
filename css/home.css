@@ -1,4 +1,14 @@
 /* @import "toastify-js/src/toastify.css"; */
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url(../fonts/Bebas_Neue/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Lato Regular';
+  src: url(../fonts/Lato/Lato-Regular.ttf);
+}
+
 
 body {
   background-color: #000;
@@ -87,5 +97,17 @@ body {
 #staticModalCadastro .form-control:focus {
   box-shadow: none;
   border-color: rgb(255, 183, 0);
+}
+
+#staticModalCadastro label {
+  font-family: 'Bebas Neue';
+  font-size: medium;
+  font-weight: 700;
+}
+
+#staticModalCadastro input::placeholder {
+  font-size: small;
+  font-family: 'Lato Regular';
+  font-style: italic;
 }
 

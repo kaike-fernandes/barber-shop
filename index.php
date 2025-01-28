@@ -35,66 +35,65 @@
       </div>
     </div>
   </div>
-</div>
-</div>
 
 
-<div class="box-form">
-  <form id="form-login" class="form-control">
 
-    <div class="box-login">
-      <div class="form-title" style="text-align: center; margin-bottom: 10px;">
-        <div class="row">
-          <div class="col">
-            <i class="bi bi-scissors"></i>
+  <div class="box-form">
+    <form id="form-login" class="form-control">
+
+      <div class="box-login">
+        <div class="form-title" style="text-align: center; margin-bottom: 10px;">
+          <div class="row">
+            <div class="col">
+              <i class="bi bi-scissors"></i>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="row">
-          <div class="col">
-            <label for="">Login:</label>
-            <input type="text" id="userLogin" class="form-control">
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="">Login:</label>
+              <input type="text" id="userLogin" class="form-control">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="row">
-          <div class="col">
-            <label for="">Senha:</label>
-            <input type="text" id="passwordLogin" class="form-control">
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="">Senha:</label>
+              <input type="text" id="passwordLogin" class="form-control">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="row">
-          <div class="col-12">
-            <div class="btnLogin">
-              <button type="buttom" id="btnLogin" class="btn btn-dark btn_login">Login</button>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-12">
+              <div class="btnLogin">
+                <button type="buttom" id="btnLogin" class="btn btn-dark btn_login">Login</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="box-account">
-      <div class="row">
-        <div class="col text-center">
-          <span class="forgot-pass" id="forgotPass">Esqueci a senha?</span>
-        </div>
-        <div class="col text-center p-0 m-0">
-          <b>|</b>
-        </div>
-        <div class="col text-center p-0 m-0">
-          <span class="add-account" id="addAccount">Criar conta </span><i class="bi bi-person-add"></i>
+      <div class="box-account">
+        <div class="row">
+          <div class="col text-center">
+            <span class="forgot-pass" id="forgotPass">Esqueci a senha?</span>
+          </div>
+          <div class="col text-center p-0 m-0">
+            <b>|</b>
+          </div>
+          <div class="col text-center p-0 m-0">
+            <span class="add-account" id="addAccount">Criar conta </span><i class="bi bi-person-add"></i>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
 </div>
 
 
