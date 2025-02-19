@@ -1,113 +1,95 @@
 /* @import "toastify-js/src/toastify.css"; */
 @font-face {
-  font-family: 'Bebas Neue';
+  font-family: "Bebas Neue";
   src: url(../fonts/Bebas_Neue/BebasNeue-Regular.ttf);
 }
 
 @font-face {
-  font-family: 'Lato Regular';
+  font-family: "Lato Regular";
   src: url(../fonts/Lato/Lato-Regular.ttf);
 }
 
-
 body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background-color: #000;
 }
 
 .container {
-  justify-content: center;
-  max-width: 600px;
+  color: "#fff";
   margin: auto;
-  margin-top: 50px;
   background-color: none;
   border-radius: 20px;
   /* box-shadow: 4px 4px 4px 4px #f8f8f8; */
 }
 
-.box-text {
+.navbar {
+  background-color: #515151;
+}
+
+.navbar > .container-fluid {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+nav > .container-fluid > .logo-home {
   color: #fff;
-  margin: 30px 0px 30px 0px;
+  font-family: "Bebas Neue";
+}
+
+nav > .container-fluid > .pages-home {
+  color: #fff;
+  align-items: center;
+  font-family: "Lato Regular";
+  display: flex;
+  gap: 30px;
+}
+
+nav > .container-fluid > a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: none;
+}
+
+main {
+  display: flex;
+  flex: 1;
+}
+
+main > section > .container > .title-home {
+  color: #fff;
   text-align: center;
 }
 
-.titleLogin {
-  font-size: larger;
-  margin-bottom: 20px;
+.content {
+  flex: 3;
+  padding: 20px;
 }
 
-.textLogin {
-  font-size: medium;
-  margin-bottom: 20px;
+.sidebar {
+  flex: 0.05;
+  min-height: max-content;
+  padding: 20px;
+  background-color: #ccc;
 }
 
-.box-form {
-  display: grid;
-  justify-items: center;
+.sidebar > div.box-sidebar {
+  height: 100%;
   width: 100%;
 }
 
-.box-login {
-  margin: auto;
+.sidebar > .icon-hamburguer > i.bi-list {
+  color: #000;
+  font-size: 30px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
   padding: 10px;
 }
-
-#form-login {
-  width: 400px;
-}
-
-.form-group {
-  padding: 10px;
-  margin: 10px 0px 10px 0px;
-}
-
-.btnLogin{
-  width: 100%;
-}
-
-.btn_login {
-  width: 100%;
-}
-
-.box-account {
-  margin: 10px;
-}
-
-.add-account {
-  font-size: small;
-  cursor: pointer;
-}
-
-.add-account:hover {
-  font-weight: bold;
-  color: rgb(79, 79, 79);
-}
-
-.forgot-pass {
-  font-size: small;
-  cursor: pointer;
-}
-
-.forgot-pass:hover {
-  font-weight: bold;
-  color: rgb(79, 79, 79);
-}
-
-/* modal */
-
-#staticModalCadastro .form-control:focus {
-  box-shadow: none;
-  border-color: rgb(255, 183, 0);
-}
-
-#staticModalCadastro label {
-  font-family: 'Bebas Neue';
-  font-size: medium;
-  font-weight: 700;
-}
-
-#staticModalCadastro input::placeholder {
-  font-size: small;
-  font-family: 'Lato Regular';
-  font-style: italic;
-}
-
