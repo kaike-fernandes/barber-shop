@@ -1,6 +1,15 @@
 // MÁSCARAS
 $(`#telefone_user`).mask("(99) 99999-9999");
 
+$(document).ready( function (){
+    const url = new URLSearchParams(window.location.search);
+    const login = url.get("login");
+
+    if (login) {
+        exibirToast(login, '#CC3300');
+    }
+})
+
 // LOGIN USER
 $(document).ready(function (){
     $(`#btnLogin`).on('click', function(event) {
@@ -8,25 +17,44 @@ $(document).ready(function (){
     
         let user = $(`#userLogin`).val();
         let pass = $(`#passwordLogin`).val();
+
+        if ((user == "") || (pass == "")) {
+            exibirToast("Preencha todos os campos para fazer login.", '#FFCC00');
+            return;
+        }
     
         console.log(user);
         console.log(pass);
     
         $.ajax({
             type: "POST",
-            url: "login.php",
+            url: "./user/login.php",
             cache: false,
             data: {
             usuario: user,
             senha: pass
             },
+
+            beforeSend: function () {
+                $(`#userLogin`).val("");
+                $(`#passwordLogin`).val("");
+            },
     
             success: function(data) {
-                console.log("Dados enviados!")
+                console.log(data);
+
+                if (data.status == "success") {
+                    exibirToast(data.message, '#99CC33');
+                    setTimeout(() => {
+                        window.location.href = "./home/home.php";
+                    }, 2000);
+                } else {
+                    exibirToast(data.message, '#CC3300');
+                }
             },
     
             error: function(error) {
-                console.log("Não enviou nada.");
+                exibirToast("Algo deu errado, por favor entre em contato com o administrador!", '#CC3300');
             }
         })
     });
@@ -132,6 +160,10 @@ function visualizarSenha(idIcon, idInput) {
     const input = idInput;
     const inputType = $(`#` + input).attr('type');
 
+    console.log(icon);
+    console.log(input);
+    console.log(inputType);
+
     if (inputType === 'password') {
         $(`#` + input).attr('type', 'text');
         $(`#` + icon).removeClass("bi bi-eye-slash-fill");
@@ -143,7 +175,7 @@ function visualizarSenha(idIcon, idInput) {
     }
 };
 
-
+// function padrão para chamar toast
 function exibirToast(message, color) {
     Toastify({
         text: message,
@@ -160,3 +192,4 @@ function exibirToast(message, color) {
         // onClick: function(){} // Callback after click
       }).showToast();
 }
+

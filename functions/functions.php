@@ -70,3 +70,46 @@ function validarEmailExiste($email)
         return false;
     }
 }
+
+function loginUsuario($email, $senha) {
+
+    global $pdo;
+
+    try {
+
+        $sql = "SELECT 
+                    * 
+                FROM 
+                    usuarios 
+                WHERE
+                    EMAIL = :email";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($senha, $user['SENHA'])) {
+            $dados_user = [
+                "id" => $user['ID_USUARIO'],
+                "nome" => $user['NOME'],
+                "email" => $user['EMAIL'],
+                "telefone" => $user['TELEFONE'],
+            ];
+
+            $return = [
+                "status" => "success", 
+                "message" => "Usuário logado com sucesso!",
+                "dados_user" => $dados_user, 
+            ];
+            
+            return $return;
+        } else {
+            $return = ["status" => "error", "message" => "Usuário ou senha inválidos!"];
+            return $return;
+        }
+
+    } catch (PDOException $e) {
+        echo "Erro: " . $e->getMessage();
+    }
+}

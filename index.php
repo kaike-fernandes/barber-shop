@@ -1,10 +1,17 @@
+<?php 
+session_start();
+$_SESSION = [];
+session_destroy();
+error_reporting(E_ALL);
+?>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cadastro</title>
 <link rel="shortcut icon" href="assets/img/hairstyle.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
@@ -39,7 +46,7 @@
 
 
   <div class="box-form">
-    <form id="form-login" class="form-control">
+    <div id="form-login" class="form-control">
 
       <div class="box-login">
         <div class="form-title" style="text-align: center; margin-bottom: 10px;">
@@ -54,7 +61,7 @@
           <div class="row">
             <div class="col">
               <label for="">Login:</label>
-              <input type="text" id="userLogin" class="form-control">
+              <input type="text" id="userLogin" placeholder="Informe seu e-mail" class="form-control">
             </div>
           </div>
         </div>
@@ -63,7 +70,12 @@
           <div class="row">
             <div class="col">
               <label for="">Senha:</label>
-              <input type="text" id="passwordLogin" class="form-control">
+              <div class="input-group">
+                <input type="password" class="form-control" id="passwordLogin" placeholder="Digite sua senha" maxlength="8">
+                <button type="button" class="btn btn-dark" id="toggle_senha_login" onclick="visualizarSenha(this.querySelector('i').id, $(`#passwordLogin`).attr('id'))">
+                  <i class="bi bi-eye-slash-fill" id="olho_senha_login"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +104,7 @@
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
