@@ -26,6 +26,8 @@ if (empty($_SESSION['dados_usuario']) && !isset($_SESSION['dados_usuario'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="../css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
     <title>Bem-vindo</title>
 </head>
 
@@ -47,8 +49,69 @@ if (empty($_SESSION['dados_usuario']) && !isset($_SESSION['dados_usuario'])) {
         <!-- side bar -->
         <aside class="sidebar">
             <div class="box-sidebar">
-                <div class="icon-hamburguer">
-                    <i class="bi bi-list"></i>
+                <div class="header-sidebar">
+                    <div class="icon-hamburguer">
+                        <!-- <i class="bi bi-list"></i> -->
+                        <div class="list line1"></div>
+                        <div class="list line2"></div>
+                        <div class="list line3"></div>
+                    </div>
+                </div>
+
+                <div class="middle-sidebar">
+                    <div class="icon-servicos">
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-calendar icons">
+                                    <i class="bi bi-calendar-day-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-search icons">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-person icons">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-scissors icons">
+                                    <i class="bi bi-scissors"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-percent icons">
+                                    <i class="bi bi-percent"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="footer-sidebar">
+                    <div class="icon-footer">
+                        <div class="row">
+                            <div class="col">
+                                <div class="icon-logout icons">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -76,5 +139,7 @@ if (empty($_SESSION['dados_usuario']) && !isset($_SESSION['dados_usuario'])) {
 </body>
 
 </html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="../js/home.js"></script>
 <script src="../js/script.js"></script>
