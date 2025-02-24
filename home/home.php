@@ -5,6 +5,8 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 ini_set('display_startup_errors', 1);
+require_once('../connection/db.php');
+require_once('../functions/functions.php');
 
 // echo "<pre>";
 // print_r($_SESSION['dados_usuario']);
@@ -13,6 +15,12 @@ ini_set('display_startup_errors', 1);
 if (empty($_SESSION['dados_usuario']) && !isset($_SESSION['dados_usuario'])) {
     header("Location: ../index.php?login=Usuário não está logado ou sessão expirou!");
 }
+
+$icons = listarAbas();
+
+// echo "<pre style='color: white'>";
+// print_r($icons);
+// echo "</pre>";
 
 ?>
 
@@ -51,66 +59,57 @@ if (empty($_SESSION['dados_usuario']) && !isset($_SESSION['dados_usuario'])) {
             <div class="box-sidebar">
                 <div class="header-sidebar">
                     <div class="icon-hamburguer">
-                        <!-- <i class="bi bi-list"></i> -->
-                        <div class="list line1"></div>
-                        <div class="list line2"></div>
-                        <div class="list line3"></div>
+                        <i class="bi bi-arrow-right list"></i>
                     </div>
                 </div>
 
                 <div class="middle-sidebar">
                     <div class="icon-servicos">
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-calendar icons">
-                                    <i class="bi bi-calendar-day-fill"></i>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-search icons">
-                                    <i class="bi bi-search"></i>
-                                </div>
-                            </div>
-                        </div>
+                        <?php foreach ($icons as $key => $value) {
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-person icons">
-                                    <i class="bi bi-person-circle"></i>
-                                </div>
-                            </div>
-                        </div>
+                            if ($key == 6) {
+                                continue;
+                            }
+                        ?>
+                            <div class="contorno">
+                                <div class="row">
+                                    <div class="col col-2">
+                                        <div class="icons">
+                                            <i class="<?= $value['IC_CLASS'] ?>"></i>
+                                        </div>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-scissors icons">
-                                    <i class="bi bi-scissors"></i>
+                                    <div class="col col-10">
+                                        <div class="desc">
+                                            <span class="text-desc"><?= $value['DESC_ABAS'] ?></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-percent icons">
-                                    <i class="bi bi-percent"></i>
-                                </div>
-                            </div>
-                        </div>
-
+                        <?php } ?>
                     </div>
                 </div>
 
                 <div class="footer-sidebar">
                     <div class="icon-footer">
-                        <div class="row">
-                            <div class="col">
-                                <div class="icon-logout icons">
-                                    <i class="bi bi-box-arrow-right"></i>
+                        <a href="./btn_logout.php" style="text-decoration: none; text-transform:none; color: #fff;">
+                            <div class="contorno" id="btn_logout">
+                                <div class="row">
+                                    <div class="col col-2">
+                                        <div class="icons">
+                                            <i class="<?= $icons[6]['IC_CLASS'] ?>"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-10">
+                                        <div class="desc">
+                                            <span class="text-desc" style="padding-left: 10px"><?= $icons[6]['DESC_ABAS'] ?></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
