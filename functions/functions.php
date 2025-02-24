@@ -56,7 +56,7 @@ function validarEmailExiste($email)
     $stmt->bindParam(':email', $email);
 
     $res = $stmt->execute();
-    
+
     if ($res) {
         $returnArray = array();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -71,7 +71,8 @@ function validarEmailExiste($email)
     }
 }
 
-function loginUsuario($email, $senha) {
+function loginUsuario($email, $senha)
+{
 
     global $pdo;
 
@@ -98,18 +99,39 @@ function loginUsuario($email, $senha) {
             ];
 
             $return = [
-                "status" => "success", 
+                "status" => "success",
                 "message" => "Usuário logado com sucesso!",
-                "dados_user" => $dados_user, 
+                "dados_user" => $dados_user,
             ];
-            
+
             return $return;
         } else {
             $return = ["status" => "error", "message" => "Usuário ou senha inválidos!"];
             return $return;
         }
-
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
+    }
+}
+
+
+function listarAbas()
+{
+
+    global $pdo;
+
+    $sql = "SELECT * FROM icons_abas WHERE IC_ATIVO = 'S'";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        $returnArray = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $returnArray[$row['ID_IC_ABAS']] = $row;
+        }
+        return $returnArray;
+    } catch (PDOException $erro) {
+        echo "Erro: " . $erro->getMessage();
     }
 }

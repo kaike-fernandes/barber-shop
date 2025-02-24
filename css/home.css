@@ -23,11 +23,10 @@ body {
   margin: auto;
   background-color: none;
   border-radius: 20px;
-  /* box-shadow: 4px 4px 4px 4px #f8f8f8; */
 }
 
 .navbar {
-  background-color: #515151;
+  background-color: #1e1e1e;
 }
 
 .navbar > .container-fluid {
@@ -72,11 +71,15 @@ main > section > .container > .title-home {
 
 .sidebar {
   flex: 0.05;
-  /* height: 100vh; */
   min-height: max-content;
   padding: 20px;
-  background-color: #ccc;
-  transition: 0.5s ease-in-out;
+  background-color: #2a2a2a;
+  color: #ffff;
+  transition: 0s ease-in-out;
+}
+
+.sidebar.expanded {
+  flex: 0.5;
 }
 
 .sidebar > .box-sidebar {
@@ -90,35 +93,31 @@ main > section > .container > .title-home {
 .middle-sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
   transition: 0.5s;
 }
 
 .footer-sidebar {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
   transition: 0.5s;
 }
 
 .sidebar > .box-sidebar > .header-sidebar > .icon-hamburguer {
-  display: flex;
+  display: grid;
   width: 100%;
   height: 20px;
-  flex-direction: column;
-  justify-content: space-between;
-  align-self: flex-start;
-  align-items: flex-end;
+  align-items: center;
   cursor: pointer;
-  color: #000;
+}
+
+.sidebar.expanded .icon-hamburguer {
+  justify-items: end;
 }
 
 .sidebar > .box-sidebar > .icon-servicos {
-  align-self: center;
-}
-
-.sidebar.expanded {
-  flex: 0.5;
+  justify-content: flex-end;
 }
 
 .sidebar.expanded .middle-sidebar {
@@ -130,25 +129,84 @@ main > section > .container > .title-home {
 }
 
 .sidebar > .box-sidebar > .header-sidebar > .icon-hamburguer > .list {
-  width: 30px;
-  height: 1px;
-  border: 1px solid #000;
-  background-color: #000;
+  font-size: x-large;
   transition: 0.5s;
 }
 
 .icons {
+  display: flex;
   transition: 0.5s;
 }
 
 .icons:hover {
-  transition: 1;
+  transition: 0.5s;
   transform: scale(1.2);
 }
 
 .icons > .bi {
   font-size: x-large;
   cursor: pointer;
+}
+
+.sidebar.expanded .icons {
+  transform: none;
+  transition: 0ms;
+}
+
+.sidebar.expanded .icons:hover {
+  color: #000;
+}
+
+.desc {
+  height: 100%;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 1s ease-out, transform 1s ease-out, clip-path 1s ease-out,
+    width 1s ease-out;
+
+  clip-path: inset(0 100% 0 0); /* Esconde completamente */
+  width: 0; /* Garante que a div não ocupe espaço */
+  overflow: hidden; /* Evita que o conteúdo vaze */
+  white-space: nowrap; /* Impede quebra de linha */
+}
+
+/* Quando a sidebar expande, a descrição aparece suavemente */
+.sidebar.expanded .desc {
+  align-content: center;
+  opacity: 1;
+  transform: translateX(0);
+  clip-path: inset(0 0 0 0); /* Mostra o conteúdo */
+  width: auto; /* Ajusta para o tamanho do conteúdo */
+}
+
+.text-desc {
+  font-size: small;
+  opacity: 0;
+  transform: translateX(-20px); /* Começa levemente deslocado à esquerda */
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  overflow: hidden;
+  display: block;
+}
+
+.sidebar.expanded .contorno {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.sidebar.expanded .contorno:hover {
+  background-color: rgb(255, 183, 0);
+  border-radius: 5px;
+  transition: 0.5s;
+  color: #000;
+}
+
+.sidebar.expanded .text-desc:hover {
+  color: #000;
+}
+
+.sidebar.expanded .text-desc {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 footer {
