@@ -1,13 +1,57 @@
 // MÁSCARAS
 $(`#telefone_user`).mask("(99) 99999-9999");
 
+$(`.box-text`).hide();
+$(`.box-form`).hide();
+
+$(document).ready(function () {
+  let img = new Image();
+  img.src = $('body').css('background-image').replace(/url\(["']?(.*?)["']?\)/, '$1'); // Extrai a URL da imagem no CSS
+
+  img.onload = function () {
+    $('.box-text, .box-form').slideDown(1000); // Exibe os elementos suavemente após a imagem carregar
+  };
+})
+
+// MODAL RECUPERAR SENHA
+$(document).ready(function () {
+  const url = new URLSearchParams(window.location.search);
+  const token = url.get("token");
+
+  if(token) {
+    $(`#staticModalAlterarSenha`).modal('show');
+
+    $('#alterar_senha').on('click', function () {
+      let newSenha = $('#new_senha').val();
+      $.ajax({
+        type: "POST",
+        url: "./user/alterar_senha.php",
+        cache: false,
+        data: {
+          token: token,
+          newSenha: newSenha,
+        },
+
+        success: function (data) {
+          console.log('Enviado com sucesso' + data);
+        },
+
+        error: function () {
+          exibirToast("Algo deu errado, entre em contato com o administrador.", '#7a1b0c', '#fff')
+        }
+      });
+    });
+    
+  }
+})
+
 // LOGIN MESSAGE
 $(document).ready(function () {
   const url = new URLSearchParams(window.location.search);
   const login = url.get("login");
 
   if (login) {
-    exibirToast(login, "#CC3300");
+    exibirToast(login, "#7a1b0c", "#fff");
   }
 });
 
@@ -30,7 +74,7 @@ $(document).ready(function () {
     let pass = $(`#passwordLogin`).val();
 
     if (user == "" || pass == "") {
-      exibirToast("Preencha todos os campos para fazer login.", "#FFCC00");
+      exibirToast("Preencha todos os campos para fazer login.", "#FFCC00", "#000", "#000", "#FFF");
       return;
     }
 
@@ -60,14 +104,14 @@ $(document).ready(function () {
             window.location.href = "./home/home.php";
           }, 2000);
         } else {
-          exibirToast(data.message, "#CC3300");
+          exibirToast(data.message, "#7a1b0c", "#fff");
         }
       },
 
       error: function (error) {
         exibirToast(
           "Algo deu errado, por favor entre em contato com o administrador!",
-          "#CC3300"
+          "#7a1b0c", "#fff"
         );
       },
     });
@@ -101,12 +145,12 @@ $(document).ready(function () {
       senha == "" ||
       confirm_senha == ""
     ) {
-      exibirToast("Preencha todos os campos para se cadastrar.", "#FFCC00");
+      exibirToast("Preencha todos os campos para se cadastrar.", "#FFCC00", "#000");
       return;
     }
 
     if (senha != confirm_senha) {
-      exibirToast("As senhas informadas não são iguais.", "#CC3300");
+      exibirToast("As senhas informadas não são iguais.", "#7a1b0c", "#fff");
       return;
     } else {
       $.ajax({
@@ -122,7 +166,7 @@ $(document).ready(function () {
           if (data == true) {
             exibirToast(
               "Esse email já foi cadastrado, insira outro.",
-              "#CC3300"
+              "#7a1b0c", "#fff"
             );
             return;
           } else {
@@ -153,14 +197,14 @@ $(document).ready(function () {
               },
 
               error: function (erro) {
-                exibirToast("Algo deu errado", "#CC3300");
+                exibirToast("Algo deu errado", "#7a1b0c", "#fff");
               },
             });
           }
         },
 
         error: function (erro) {
-          exibirToast("Algo deu errado", "#CC3300");
+          exibirToast("Algo deu errado", "#7a1b0c", "#fff");
         },
       });
     }
@@ -172,15 +216,37 @@ $(`#forgotPass`).on("click", function () {
   $(`#staticModalRecuSenha`).modal("show");
 });
 
+$(document).ready(function () {
+  $(`#recu_senha`).on('click', function () {
+    
+    let email = $(`#email_rec_senha`).val();
+
+    if ((!email) || (email == "") || (email == null)) {
+      exibirToast("Preencha seu e-mail, sem ele não podemos te enviar o link para recuperar sua senha!", "#FFCC00", "#FFF");
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+        url: "./user/recu_senha.php",
+        cache: false,
+        data: {
+         "email": email,
+        },
+
+        success: function (data) {
+          console.log(data);
+        }
+    })
+
+  })
+})
+
 // func para visualizar senha campo de cadastro
 function visualizarSenha(idIcon, idInput) {
   const icon = idIcon;
   const input = idInput;
   const inputType = $(`#` + input).attr("type");
-
-  console.log(icon);
-  console.log(input);
-  console.log(inputType);
 
   if (inputType === "password") {
     $(`#` + input).attr("type", "text");
@@ -194,10 +260,10 @@ function visualizarSenha(idIcon, idInput) {
 }
 
 // function padrão para chamar toast
-function exibirToast(message, color) {
+function exibirToast(message, color, textColor = null) {
   Toastify({
     text: message,
-    duration: 3000,
+    duration: 2000,
     // destination: "https://github.com/apvarun/toastify-js",
     // newWindow: true,
     close: true,
@@ -206,6 +272,8 @@ function exibirToast(message, color) {
     // stopOnFocus: true, // Prevents dismissing of toast on hover
     style: {
       background: color,
+      color: textColor,
+      fontWeight: "bold",
     },
     // onClick: function(){} // Callback after click
   }).showToast();

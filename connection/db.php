@@ -23,12 +23,12 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-$dsn = "mysql:host=$hostname;dbname=$db;chaset=$charset";
+$dsn = "mysql:host=$hostname;dbname=$db;charset=$charset";
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $err) {
-    throw new PDOException($err->getMessage(), (int)$e->getCode());
+    throw new PDOException($err->getMessage(), (int)$err->getCode());
 }
 
 ?>
