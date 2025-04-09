@@ -1,9 +1,12 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 function cadastrarUsuario($nome, $email, $telefone, $senha)
 {
@@ -12,7 +15,7 @@ function cadastrarUsuario($nome, $email, $telefone, $senha)
 
     try {
         $sql = "INSERT INTO 
-                usuarios (
+                USUARIOS (
                     NOME,
                     EMAIL, 
                     TELEFONE, 
@@ -50,7 +53,7 @@ function validarEmailExiste($email)
 
     global $pdo;
 
-    $sql = "SELECT EMAIL FROM usuarios WHERE EMAIL = :email";
+    $sql = "SELECT EMAIL FROM USUARIOS WHERE EMAIL = :email";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':email', $email);
@@ -81,7 +84,7 @@ function loginUsuario($email, $senha)
         $sql = "SELECT 
                     * 
                 FROM 
-                    usuarios 
+                    USUARIOS 
                 WHERE
                     EMAIL = :email";
 
@@ -120,7 +123,7 @@ function listarAbas()
 
     global $pdo;
 
-    $sql = "SELECT * FROM icons_abas WHERE IC_ATIVO = 'S'";
+    $sql = "SELECT * FROM ICONS_ABAS WHERE IC_ATIVO = 'S'";
 
     try {
         $stmt = $pdo->prepare($sql);
@@ -133,5 +136,108 @@ function listarAbas()
         return $returnArray;
     } catch (PDOException $erro) {
         echo "Erro: " . $erro->getMessage();
+    }
+}
+
+function emailRecuperarSenha($email, $TOKEN)
+{
+
+    require '../vendor/autoload.php'; // Certifique-se de que o PHPMailer foi instalado
+
+    $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+
+    $posicaoStr = strpos($email, '@');
+    $parteDominio = substr($email, $posicaoStr);
+    $dominio = strstr($parteDominio, '.', true);
+
+    switch ($dominio) {
+        case 'gmail':
+            $smtp_host = 'smtp.gmail.com'; 
+            break;
+        case 'outlook':
+            $smtp_host = 'smtp.office365.com';
+            break;
+        case 'hotmail':
+            $smtp_host = 'smtp.office365.com';
+            break;
+        case 'live':
+            $smtp_host = 'smtp.live.com';
+            break;
+        case 'yahoo':
+            $smtp_host = 'smtp.mail.yahoo.com';
+            break;
+        default:
+            $smtp_host = 'smtp.gmail.com';
+            break;
+    }
+
+    try {
+        // Configuração do servidor SMTP
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com'; // Servidor SMTP (troque se necessário)
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'kaike.jacone@gmail.com'; // Seu e-mail SMTP
+        $mail->Password   = 'szzr olus ihdf uqed'; // Sua senha (use App Password se for Gmail)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS recomendado
+        $mail->Port       = 587; // Porta padrão para TLS
+
+        // Configuração do e-mail
+        $mail->setFrom('kaike.jacone@gmail.com', 'The Glantemens Place'); // Remetente
+        $mail->addReplyTo('kaike.jacone@gmail.com', 'The Glantemens Place'); // Remetente
+        $mail->addAddress($email, 'aaaaa'); // Destinatário
+
+        $mail->addEmbeddedImage('../assets/img/hairstyle.png', 'logoCid'); // 'logoCid' é o Content-ID usado no HTML
+
+        $mail->isHTML(true); // Habilitar HTML
+        $mail->Subject = 'Recupere sua senha – The Glantemens Place';
+        $mail->Body    = "
+                        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;'>
+                            <div style='text-align: center; margin-bottom: 20px;'>
+                                <img src='cid:logoCid' alt='The Glantemens Place' style='max-width: 60px;'>
+                            </div>
+                            <h2 style='color: #333;'>Esqueceu sua senha?</h2>
+                            <p style='font-size: 16px; color: #555;'>
+                                Fica tranquilo(a), isso acontece!
+                            </p>
+                            <p style='font-size: 16px; color: #555;'>
+                                Recebemos uma solicitação para redefinir a senha da sua conta na <strong>The Glantemens Place</strong>.
+                            </p>
+                            <p style='font-size: 16px; color: #555;'>
+                                É só clicar no botão abaixo para criar uma nova senha:
+                            </p>
+                            <p style='text-align: center; margin: 30px 0;'>
+                                <a href='http://localhost/barber-shop/index.php?token=$TOKEN'
+                                style='background-color: #1e90ff; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;'>
+                                Redefinir minha senha
+                                </a>
+                            </p>
+                            <p style='font-size: 14px; color: #999;'>
+                                Se você não pediu isso, pode ignorar este e-mail. Está tudo certo 😉
+                            </p>
+                            <hr style='margin-top: 30px; border: none; border-top: 1px solid #eee;' />
+                            <p style='font-size: 12px; color: #aaa; text-align: center;'>
+                                The Glantemens Place • Cuidando do seu estilo com atitude.
+                            </p>
+                        </div>
+                    ";
+        $mail->AltBody = "
+                        Esqueceu sua senha?
+                        Fica tranquilo(a), isso acontece!
+                        Recebemos uma solicitação para redefinir a senha da sua conta na The Glantemens Place.
+
+                        Clique no link abaixo para criar uma nova senha:
+                        http://localhost/barber-shop/index.php?token=$TOKEN
+
+                        Se você não solicitou isso, é só ignorar este e-mail. 😉
+
+                        The Glantemens Place • Cuidando do seu estilo com atitude.
+                    "; // Versão sem HTML
+
+        $mail->send();
+        echo 'E-mail enviado com sucesso!';
+    } catch (Exception $e) {
+        echo "Erro ao enviar e-mail: {$mail->ErrorInfo}";
     }
 }
