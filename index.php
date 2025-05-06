@@ -115,8 +115,11 @@ error_reporting(E_ALL);
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro de Usuário</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" id="iconCloseModal" onclick="limpaModalCadastro()" aria-label="Close"></button>
+        <div class="modal-box-header">
+          <div class="modal-box-title">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro de Usuário</h1>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
         <div class="boxModal">
@@ -171,8 +174,8 @@ error_reporting(E_ALL);
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="btnFecharModal" onclick="limpaModalCadastro()" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" id="cadastro_usuario" class="btn btn-primary">Confirmar Cadastro</button>
+        <button type="button" class="btn btn-dark" id="btnFecharModal" onclick="limpaModalCadastro()" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" id="cadastro_usuario" class="btn">Confirmar Cadastro</button>
       </div>
     </div>
   </div>
@@ -183,36 +186,38 @@ error_reporting(E_ALL);
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Recuperar senha</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-box-header">
+          <div class="modal-box-title">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Recuperar senha</h1>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
-        <div class="modal-body">
-          <div class="boxModal">
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <p class="text-center">Preencha os dados abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
-                </div>
+        <div class="boxModal">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <p class="text-center text_recu_senha" >Preencha o campo abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="email_rec_senha">Informe seu e-mail:</label>
-                  <input type="email" class="form-control" placeholder="Informe seu e-mail" id="email_rec_senha">
-                </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="email_rec_senha">Informe seu e-mail:</label>
+                <input type="email" class="form-control" placeholder="Informe seu e-mail" id="email_rec_senha">
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" id="recu_senha" class="btn btn-primary">Recuperar Senha</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" id="recu_senha" class="btn">Recuperar Senha</button>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
@@ -221,8 +226,11 @@ error_reporting(E_ALL);
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Alterar Senha</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-box-header">
+          <div class="modal-box-title">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Alterar Senha</h1>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
         <div class="modal-body">
@@ -256,8 +264,8 @@ error_reporting(E_ALL);
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" id="alterar_senha" class="btn btn-success">Altrar Senha</button>
+          <button type="button" id="fechar_modal_alterar_senha" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" id="alterar_senha" class="btn">Alterar Senha</button>
         </div>
       </div>
     </div>

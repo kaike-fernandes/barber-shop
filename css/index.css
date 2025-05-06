@@ -5,8 +5,11 @@
 }
 
 @font-face {
-  font-family: 'Lato Regular';
-  src: url(../fonts/Lato/Lato-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Special Elite';
+  src: url(../fonts/Special_Elite/SpecialElite-Regular.ttf);
 }
 
 
@@ -70,7 +73,6 @@ body {
 
 #form-login input::placeholder {
   font-size: small;
-  font-family: 'Lato Regular';
   font-style: italic;
 }
 
@@ -113,26 +115,175 @@ body {
   color: rgb(79, 79, 79);
 }
 
-/*modal cadastro*/
+/* MODAL CADASTRO */
 
-#staticModalCadastro .form-control:focus, #staticModalRecuSenha .form-control:focus {
+
+#staticModalCadastro .modal-header {
+  padding: 10px;
+  border-bottom: none;
+}
+
+#staticModalCadastro .modal-box-header {
+  width: 100%;
+  height: 50px;
+  margin: 0.5px;
+  display: flex;
+  background-color: rgb(255, 183, 0);
+  justify-content: center;
+  border-radius: 3px;
+}
+
+#staticModalCadastro .modal-box-title {
+  align-content: center;
+}
+
+#staticModalCadastro .form-control:focus {
   box-shadow: none;
   border-color: rgb(255, 183, 0);
 }
 
-#staticModalCadastro label, #staticModalRecuSenha label {
-  font-family: 'Bebas Neue';
+#staticModalCadastro label {
+  font-family: 'Special Elite';
   font-size: medium;
   font-weight: 550;
 }
 
-#staticModalCadastro input::placeholder, #staticModalRecuSenha input::placeholder {
+#staticModalCadastro input::placeholder {
   font-size: small;
-  font-family: 'Lato Regular';
+  font-family: 'Special Elite';
   font-style: italic;
 }
 
-#staticModalCadastro .form-group, #staticModalRecuSenha .form-group {
+#staticModalCadastro .form-group {
   padding: 10px;
 }
+
+#cadastro_usuario {
+  font-size: medium;
+  color: #000;
+  background-color: rgb(255, 183, 0);
+  transition: 0.5s;
+}
+
+#cadastro_usuario:hover {
+  background-color: rgb(195, 145, 19)
+}
+
+/* MODAL RECUPERAR SENHA */
+
+#staticModalRecuSenha .modal-header {
+  padding: 10px;
+  border-bottom: none;
+}
+
+#staticModalRecuSenha .modal-box-header {
+  width: 100%;
+  height: 50px;
+  margin: 0.5px;
+  display: flex;
+  background-color: rgb(255, 183, 0);
+  justify-content: center;
+  border-radius: 3px;
+}
+
+#staticModalRecuSenha .modal-box-title {
+  align-content: center;
+}
+
+#staticModalRecuSenha .form-control:focus {
+  box-shadow: none;
+  border-color: rgb(255, 183, 0);
+}
+
+.text_recu_senha {
+  color: #949494;
+  font-size: small;
+  margin: 0%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#staticModalRecuSenha label {
+  font-family: 'Special Elite';
+  font-size: medium;
+  font-weight: 550;
+}
+
+#staticModalRecuSenha input::placeholder {
+  font-size: small;
+  font-family: 'Special Elite';
+  font-style: italic;
+}
+
+#recu_senha {
+  font-size: medium;
+  color: #000;
+  background-color: rgb(255, 183, 0);
+  transition: 0.5s;
+}
+
+#recu_senha:hover {
+  background-color: rgb(195, 145, 19)
+}
+
+/* MODAL DE ALTERAR SENHA */
+
+#staticModalAlterarSenha .modal-header {
+  padding: 10px;
+  border-bottom: none;
+}
+
+#staticModalAlterarSenha .modal-box-header {
+  width: 100%;
+  height: 50px;
+  margin: 0.5px;
+  display: flex;
+  background-color: rgb(255, 183, 0);
+  justify-content: center;
+  border-radius: 3px;
+}
+
+#staticModalAlterarSenha .modal-box-title {
+  align-content: center;
+}
+
+.modal-box-title > h1 {
+  font-family: 'Special Elite';
+  font-weight: 700;
+}
+
+.boxModal .form-group {
+  padding: 10px;
+}
+
+#staticModalAlterarSenha .form-control:focus {
+  box-shadow: none;
+  border-color: rgb(255, 183, 0);
+}
+
+#staticModalAlterarSenha label {
+  font-family: 'Special Elite';
+  font-size: medium;
+  font-weight: 550;
+}
+
+#staticModalAlterarSenha input::placeholder {
+  font-size: small;
+  font-family: 'Special Elite';
+  font-style: italic;
+}
+
+#alterar_senha {
+  font-size: medium;
+  color: #000;
+  background-color: rgb(255, 183, 0);
+  transition: 0.5s;
+}
+
+#alterar_senha:hover {
+  background-color: rgb(195, 145, 19)
+}
+
+
+
 
