@@ -32,10 +32,10 @@ error_reporting(E_ALL);
     <div class="row">
       <div class="col">
         <div class="textLogin">
-          <span class="spantextLogin">
+          <span class="spanTextLogin">
             Acesse sua conta ou cadastre-se para agendar cortes, cuidar do seu estilo e viver uma experiência única.<br>
           </span>
-          <span class="spantextLogin">
+          <span class="spanTextLogin">
             🚀 Sua transformação começa aqui!
           </span>
         </div>
@@ -47,16 +47,7 @@ error_reporting(E_ALL);
 
   <div class="box-form">
     <div id="form-login" class="form-control">
-
       <div class="box-login">
-        <div class="form-title" style="text-align: center; margin-bottom: 10px;">
-          <div class="row">
-            <div class="col">
-              <i class="bi bi-scissors"></i>
-            </div>
-          </div>
-        </div>
-
         <div class="form-group">
           <div class="row">
             <div class="col">
@@ -197,7 +188,7 @@ error_reporting(E_ALL);
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <p class="text-center text_recu_senha" >Preencha o campo abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
+                <p class="text-center text_recu_senha">Preencha o campo abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
               </div>
             </div>
           </div>
@@ -271,6 +262,15 @@ error_reporting(E_ALL);
     </div>
   </div>
 </div>
+
+<!-- LOADING MODAL -->
+<div id="loadingModal" class="d-none">
+  <div class="spinner-border m-5" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/script.js"></script>

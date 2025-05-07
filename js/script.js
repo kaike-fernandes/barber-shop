@@ -234,8 +234,21 @@ $(document).ready(function () {
          "email": email,
         },
 
+        beforeSend: () => {
+          $('#email_rec_senha').val("");
+          $('#loadingModal').toggleClass('d-flex d-none');
+        },
+
         success: function (data) {
           console.log(data);
+          if (data) {
+            exibirToast(data, "#99CC33");
+          }
+        },
+
+        complete: () => {
+          $('#staticModalRecuSenha').modal('hide');
+          $('#loadingModal').toggleClass('d-none d-flex');
         }
     })
 

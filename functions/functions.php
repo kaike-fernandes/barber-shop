@@ -148,31 +148,6 @@ function emailRecuperarSenha($email, $TOKEN)
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
 
-    $posicaoStr = strpos($email, '@');
-    $parteDominio = substr($email, $posicaoStr);
-    $dominio = strstr($parteDominio, '.', true);
-
-    switch ($dominio) {
-        case 'gmail':
-            $smtp_host = 'smtp.gmail.com'; 
-            break;
-        case 'outlook':
-            $smtp_host = 'smtp.office365.com';
-            break;
-        case 'hotmail':
-            $smtp_host = 'smtp.office365.com';
-            break;
-        case 'live':
-            $smtp_host = 'smtp.live.com';
-            break;
-        case 'yahoo':
-            $smtp_host = 'smtp.mail.yahoo.com';
-            break;
-        default:
-            $smtp_host = 'smtp.gmail.com';
-            break;
-    }
-
     try {
         // Configuração do servidor SMTP
         $mail->isSMTP();
@@ -209,7 +184,7 @@ function emailRecuperarSenha($email, $TOKEN)
                             </p>
                             <p style='text-align: center; margin: 30px 0;'>
                                 <a href='http://localhost/barber-shop/index.php?token=$TOKEN'
-                                style='background-color: #1e90ff; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;'>
+                                style='background-color: #000; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;'>
                                 Redefinir minha senha
                                 </a>
                             </p>
