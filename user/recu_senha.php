@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_errors', 'On');
 ini_set('display_startup_errors', 1);
-header('Content-Type: application/json');
+// header('Content-Type: application/json');
 require_once('../connection/db.php');
 require_once('../functions/functions.php');
 require '../vendor/autoload.php';
@@ -43,8 +43,7 @@ if (!empty($_POST['email']) && isset($_POST['email'])) {
         ];
 
         $TOKEN = JWT::encode($PAYLOAD, $SECRET_KEY, 'HS256');
-        emailRecuperarSenha($email, $TOKEN);
-
+        echo emailRecuperarSenha($email, $TOKEN);
     } else {
         echo "O e-mail informado não no nosso banco de dados.";
     }

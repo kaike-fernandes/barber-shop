@@ -5,6 +5,8 @@
 }
 
 @font-face {
+  font-family: 'Lato Regular';
+  src: url(../fonts/Lato/Lato-Regular.ttf);
 }
 
 @font-face {
@@ -12,6 +14,10 @@
   src: url(../fonts/Special_Elite/SpecialElite-Regular.ttf);
 }
 
+@font-face {
+  font-family: 'Germania One';
+  src: url(../fonts/Germania_One/GermaniaOne-Regular.ttf);
+}
 
 body {
   background-color: #000;
@@ -36,8 +42,12 @@ body {
 }
 
 .titleLogin {
-  font-size: larger;
+  font-size: x-large;
   margin-bottom: 20px;
+}
+
+.spanTitleLogin, .spanTextLogin {
+  font-family: 'Germania One';
 }
 
 .textLogin {
@@ -57,6 +67,7 @@ body {
 }
 
 #form-login {
+  background-color: #fff;
   width: 400px;
 }
 
@@ -66,12 +77,14 @@ body {
 }
 
 #form-login label {
-  font-family: 'Bebas Neue';
+  font-family: 'Special Elite';
   font-size: medium;
   font-weight: 550;
 }
 
+
 #form-login input::placeholder {
+  font-family: 'Special Elite';
   font-size: small;
   font-style: italic;
 }
@@ -82,6 +95,7 @@ body {
 }
 
 #form-login .btn_login {
+  font-family: 'Special Elite';
   width: 100%;
   background-color: rgb(255, 183, 0);
   border-color: rgb(255, 183, 0);
@@ -95,23 +109,17 @@ body {
   margin: 10px;
 }
 
-.add-account {
+.add-account, .forgot-pass {
+  font-family: 'Special Elite';
   font-size: small;
   cursor: pointer;
+  font-weight: 400;
+  transition: font-weight 0.4s ease, color 0.4s ease;
 }
 
-.add-account:hover {
-  font-weight: bold;
-  color: rgb(79, 79, 79);
-}
-
-.forgot-pass {
-  font-size: small;
-  cursor: pointer;
-}
-
-.forgot-pass:hover {
-  font-weight: bold;
+.add-account:hover, .forgot-pass:hover {
+  font-weight: 700;
+  transform: scale(1.02);
   color: rgb(79, 79, 79);
 }
 
@@ -284,6 +292,17 @@ body {
   background-color: rgb(195, 145, 19)
 }
 
+/* LOADING MODAL */
 
-
-
+#loadingModal {
+  /* display: none; escondido por padrão */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* fundo semitransparente */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
