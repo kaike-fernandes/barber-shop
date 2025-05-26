@@ -26,7 +26,8 @@ if (!empty($_POST['email']) && isset($_POST['email'])) {
     $validar_email = validarEmailExiste($email);
 
     if ($validar_email) {
-        $key = $SECRET_KEY; // chave secreta para geração do token
+        // chave secreta para geração do token
+        $key = $SECRET_KEY; 
 
         // consulta pra buscar informações do usuário
         global $pdo;
@@ -45,7 +46,7 @@ if (!empty($_POST['email']) && isset($_POST['email'])) {
         $TOKEN = JWT::encode($PAYLOAD, $SECRET_KEY, 'HS256');
         echo emailRecuperarSenha($email, $TOKEN);
     } else {
-        echo "O e-mail informado não no nosso banco de dados.";
+        echo "O e-mail informado não está no nosso banco de dados.";
     }
 } else {
     echo "Nenhum e-mail recebido!";

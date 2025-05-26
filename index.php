@@ -3,6 +3,11 @@
 $_SESSION = [];
 session_destroy();
 error_reporting(E_ALL);
+// require_once('_ACCESS/config.php');
+
+if (!defined('INTERNAL_ACCESS')) {
+  header("Location: _ERROR_PAGE/error.php?message=Você não possui acesso a essa página!");
+} 
 ?>
 
 <meta charset="utf-8">
@@ -102,7 +107,11 @@ error_reporting(E_ALL);
 
 
 <!-- Modal  Cadastro -->
-<div class="modal fade" id="staticModalCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+<?php
+include('modal/modal_cadastro.php');
+?>
+<!-- <div class="modal fade" id="staticModalCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -170,7 +179,7 @@ error_reporting(E_ALL);
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Modal Recuperar Senha -->
 <div class="modal fade" id="staticModalRecuSenha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
