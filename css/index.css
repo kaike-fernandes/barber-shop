@@ -1,22 +1,22 @@
 /* @import "toastify-js/src/toastify.css"; */
 @font-face {
   font-family: 'Bebas Neue';
-  src: url(../fonts/Bebas_Neue/BebasNeue-Regular.ttf);
+  src: url(../assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf);
 }
 
 @font-face {
   font-family: 'Lato Regular';
-  src: url(../fonts/Lato/Lato-Regular.ttf);
+  src: url(../assets/fonts/Lato/Lato-Regular.ttf);
 }
 
 @font-face {
   font-family: 'Special Elite';
-  src: url(../fonts/Special_Elite/SpecialElite-Regular.ttf);
+  src: url(../assets/fonts/Special_Elite/SpecialElite-Regular.ttf);
 }
 
 @font-face {
   font-family: 'Germania One';
-  src: url(../fonts/Germania_One/GermaniaOne-Regular.ttf);
+  src: url(../assets/fonts/Germania_One/GermaniaOne-Regular.ttf);
 }
 
 body {

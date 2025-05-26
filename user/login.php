@@ -14,10 +14,6 @@ if (!empty($_POST) && isset($_POST)) {
     
     $pass_verify = loginUsuario($usuario, $senha);
 
-    // echo "<pre>";
-    // print_r($pass_verify);
-    // echo "</pre>";
-
     if ($pass_verify['status'] == 'success') {
         $_SESSION['dados_usuario'] = $pass_verify['dados_user'];
         print_r(json_encode($pass_verify));
