@@ -27,7 +27,7 @@ if (!empty($_POST['email']) && isset($_POST['email'])) {
 
     if ($validar_email) {
         // chave secreta para geração do token
-        $key = $SECRET_KEY; 
+        $key = $SECRET_KEY;
 
         // consulta pra buscar informações do usuário
         global $pdo;
@@ -38,7 +38,7 @@ if (!empty($_POST['email']) && isset($_POST['email'])) {
 
         // DADOS DO TOKEN
         $PAYLOAD = [
-            "exp" => time() + 3600, // Expiração (1 hora)
+            "exp" => time() + 300, // Expiração (1 hora)
             "user_id" => $dados_user['ID_USUARIO'],
             "jti" => bin2hex(random_bytes(16))
         ];

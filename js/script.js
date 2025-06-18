@@ -32,12 +32,24 @@ $(document).ready(function () {
           newSenha: newSenha,
         },
 
-        success: function (data) {
-          console.log('Enviado com sucesso' + data);
+        beforeSend: () => {
+          $('#new_senha').val("");
+          $('#confirm_new_senha').val("");
+          $('#loadingModal').toggleClass('d-flex d-none');
         },
 
-        error: function () {
-          exibirToast("Algo deu errado, entre em contato com o administrador.", '#7a1b0c', '#fff')
+        success: function (data) {
+          console.log('Enviado com sucesso' + data);
+          exibirToast(data, 'success');
+        },
+
+        error: function (data) {
+          exibirToast(data.responseText, 'danger');
+        },
+
+        complete: () => {
+          $('#staticModalRecuSenha').modal('hide');
+          $('#loadingModal').toggleClass('d-none d-flex');
         }
       });
     });
@@ -51,7 +63,7 @@ $(document).ready(function () {
   const login = url.get("login");
 
   if (login) {
-    exibirToast(login, "#7a1b0c", "#fff");
+    exibirToast(login, 'danger');
   }
 });
 
@@ -61,7 +73,7 @@ $(document).ready(function () {
   const login = url.get("logout");
 
   if (login) {
-    exibirToast(login, "#FFB700");
+    exibirToast(login, 'warning');
   }
 });
 
@@ -74,7 +86,7 @@ $(document).ready(function () {
     let pass = $(`#passwordLogin`).val();
 
     if (user == "" || pass == "") {
-      exibirToast("Preencha todos os campos para fazer login.", "#FFCC00", "#000", "#000", "#FFF");
+      exibirToast("Preencha todos os campos para fazer login.", 'warning');
       return;
     }
 
@@ -99,20 +111,17 @@ $(document).ready(function () {
         console.log(data);
 
         if (data.status == "success") {
-          exibirToast(data.message, "#99CC33");
+          exibirToast(data.message, 'success');
           setTimeout(() => {
             window.location.href = "./home/home.php";
           }, 2000);
         } else {
-          exibirToast(data.message, "#7a1b0c", "#fff");
+          exibirToast(data.message, 'danger');
         }
       },
 
       error: function (error) {
-        exibirToast(
-          "Algo deu errado, por favor entre em contato com o administrador!",
-          "#7a1b0c", "#fff"
-        );
+        exibirToast("Algo deu errado, por favor entre em contato com o administrador!", 'danger');
       },
     });
   });
@@ -145,12 +154,12 @@ $(document).ready(function () {
       senha == "" ||
       confirm_senha == ""
     ) {
-      exibirToast("Preencha todos os campos para se cadastrar.", "#FFCC00", "#000");
+      exibirToast("Preencha todos os campos para se cadastrar.", 'warning');
       return;
     }
 
     if (senha != confirm_senha) {
-      exibirToast("As senhas informadas não são iguais.", "#7a1b0c", "#fff");
+      exibirToast("As senhas informadas não são iguais.", 'danger');
       return;
     } else {
       $.ajax({
@@ -165,9 +174,7 @@ $(document).ready(function () {
         success: function (data) {
           if (data == true) {
             exibirToast(
-              "Esse email já foi cadastrado, insira outro.",
-              "#7a1b0c", "#fff"
-            );
+              "Esse email já foi cadastrado, insira outro.", 'danger');
             return;
           } else {
             $.ajax({
@@ -183,7 +190,7 @@ $(document).ready(function () {
               },
 
               success: function (data) {
-                exibirToast(data.message, "#99CC33");
+                exibirToast(data.message, 'success');
               },
 
               complete: function () {
@@ -197,14 +204,14 @@ $(document).ready(function () {
               },
 
               error: function (erro) {
-                exibirToast("Algo deu errado", "#7a1b0c", "#fff");
+                exibirToast("Algo deu errado", 'danger');
               },
             });
           }
         },
 
         error: function (erro) {
-          exibirToast("Algo deu errado", "#7a1b0c", "#fff");
+          exibirToast("Algo deu errado", 'danger');
         },
       });
     }
@@ -222,7 +229,7 @@ $(document).ready(function () {
     let email = $(`#email_rec_senha`).val();
 
     if ((!email) || (email == "") || (email == null)) {
-      exibirToast("Preencha seu e-mail, sem ele não podemos te enviar o link para recuperar sua senha!", "#FFCC00", "#FFF");
+      exibirToast("Preencha seu e-mail, sem ele não podemos te enviar o link para recuperar sua senha!", 'warning');
       return;
     }
 
@@ -242,7 +249,7 @@ $(document).ready(function () {
         success: function (data) {
           console.log(data);
           if (data) {
-            exibirToast(data, "#99CC33");
+            exibirToast(data, 'success');
           }
         },
 
@@ -273,7 +280,24 @@ function visualizarSenha(idIcon, idInput) {
 }
 
 // function padrão para chamar toast
-function exibirToast(message, color, textColor = null) {
+function exibirToast(message, type, textColor = null) {
+
+  switch (type) {
+    case 'success':
+      bgColor = "#469536";
+      break;
+    case 'warning':
+      bgColor = "#FFCC00";
+      break;
+    case 'danger':
+      bgColor = "#dd5035";
+      break;
+  
+    default:
+      color = '#469536';
+      break;
+  }
+
   Toastify({
     text: message,
     duration: 2000,
@@ -284,9 +308,8 @@ function exibirToast(message, color, textColor = null) {
     position: "left", // `left`, `center` or `right`
     // stopOnFocus: true, // Prevents dismissing of toast on hover
     style: {
-      background: color,
-      color: textColor,
-      fontWeight: "bold",
+      background: bgColor,
+      color: '#fff',
     },
     // onClick: function(){} // Callback after click
   }).showToast();

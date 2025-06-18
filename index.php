@@ -3,11 +3,11 @@
 $_SESSION = [];
 session_destroy();
 error_reporting(E_ALL);
-// require_once('_ACCESS/config.php');
+require_once('_ACCESS/config.php');
 
 if (!defined('INTERNAL_ACCESS')) {
   header("Location: _ERROR_PAGE/error.php?message=Você não possui acesso a essa página!");
-} 
+}
 ?>
 
 <meta charset="utf-8">
@@ -104,181 +104,12 @@ if (!defined('INTERNAL_ACCESS')) {
   </div>
 </div>
 
-
-
-<!-- Modal  Cadastro -->
-
 <?php
 include('modal/modal_cadastro.php');
+include('modal/modal_recuperar_senha.php');
+include('modal/modal_alterar_senha.php');
+include('modal/modal_loading.php');
 ?>
-<!-- <div class="modal fade" id="staticModalCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-box-header">
-          <div class="modal-box-title">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro de Usuário</h1>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="boxModal">
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="nome_user">Informe seu nome:</label>
-                <input type="text" class="form-control" id="nome_user" placeholder="Nome completo">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="email_user">Informe seu e-mail:</label>
-                <input type="email" class="form-control" id="email_user" placeholder="email@gmail.com">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="telefone_user">Informe seu telefone:</label>
-                <input type="tel" class="form-control" id="telefone_user" placeholder="(XX) XXXXX-XXXX">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="email_user">Senha:</label>
-                <div class="input-group">
-                  <input type="password" class="form-control" id="senha_user" placeholder="Digite sua senha" maxlength="8" autocomplete="new-password">
-                  <button type="button" class="btn btn-dark" id="toggle_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#senha_user`).attr('id'))">
-                    <i class="bi bi-eye-slash-fill" id="olho_senha"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="telefone_user">Confirme sua senha:</label>
-                <div class="input-group">
-                  <input type="password" class="form-control" id="confirma_senha_user" placeholder="Confirme sua senha" maxlength="8" autocomplete="new-password">
-                  <button type="button" class="btn btn-dark" id="toggle_confirm_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#confirma_senha_user`).attr('id'))">
-                    <i class="bi bi-eye-slash-fill" id="olho_confirma_senha"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" id="btnFecharModal" onclick="limpaModalCadastro()" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" id="cadastro_usuario" class="btn">Confirmar Cadastro</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- Modal Recuperar Senha -->
-<div class="modal fade" id="staticModalRecuSenha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-box-header">
-          <div class="modal-box-title">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Recuperar senha</h1>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="boxModal">
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <p class="text-center text_recu_senha">Preencha o campo abaixo para enviarmos o link de recuperação de senha no seu e-mail.</p>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="email_rec_senha">Informe seu e-mail:</label>
-                <input type="email" class="form-control" placeholder="Informe seu e-mail" id="email_rec_senha">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" id="recu_senha" class="btn">Recuperar Senha</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-
-<!-- Modal Alterar Senha -->
-<div class="modal fade" id="staticModalAlterarSenha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-box-header">
-          <div class="modal-box-title">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Alterar Senha</h1>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-body">
-          <div class="boxModal">
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="new_senha">Nova senha:</label>
-                  <div class="input-group">
-                    <input type="password" class="form-control" id="new_senha" placeholder="Digite sua nova senha" maxlength="8" autocomplete="new-password">
-                    <button type="button" class="btn btn-dark" id="toggle_new_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#new_senha`).attr('id'))">
-                      <i class="bi bi-eye-slash-fill" id="olho_new_senha"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="confirm_new_senha">Confirme sua nova senha:</label>
-                  <div class="input-group">
-                    <input type="password" class="form-control" id="confirm_new_senha" placeholder="Digite sua senha" maxlength="8" autocomplete="new-password">
-                    <button type="button" class="btn btn-dark" id="toggle_new_senha" onclick="visualizarSenha(this.querySelector('i').id, $(`#confirm_new_senha`).attr('id'))">
-                      <i class="bi bi-eye-slash-fill" id="olho_confirm_new_senha"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="fechar_modal_alterar_senha" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" id="alterar_senha" class="btn">Alterar Senha</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LOADING MODAL -->
-<div id="loadingModal" class="d-none">
-  <div class="spinner-border m-5" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>
-
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
