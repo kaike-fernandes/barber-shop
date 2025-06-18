@@ -123,9 +123,10 @@ function listarAbas()
 
     global $pdo;
 
-    $sql = "SELECT * FROM ICONS_ABAS WHERE IC_ATIVO = 'S'";
-
+    
     try {
+        $sql = "SELECT * FROM ICONS_ABAS WHERE IC_ATIVO = 'S'";
+        
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -215,4 +216,24 @@ function emailRecuperarSenha($email, $TOKEN)
     } catch (Exception $e) {
         echo "Erro ao enviar e-mail: {$mail->ErrorInfo}";
     }
+}
+
+function alterarSenha($idUser, $newPass) {
+
+    global $pdo;
+
+    try {
+
+        $sql = "UPDATE usuarios SET SENHA = :newPass WHERE ID_USUARIO = :idUser";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("newPass", $newPass);
+        $stmt->bindParam("idUser", $idUser);
+        $res = $stmt->execute();
+
+    } catch (PDOException $erro) {
+        echo "Erro: " . $erro->getMessage();
+    }
+
+    
 }
