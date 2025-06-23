@@ -1,7 +1,8 @@
 <?php
-// session_start();
-$_SESSION = [];
+session_start();
+session_unset();
 session_destroy();
+$_SESSION = [];
 error_reporting(E_ALL);
 require_once('_ACCESS/config.php');
 
