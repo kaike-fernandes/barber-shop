@@ -1,10 +1,14 @@
+# Etapa 1: Imagem oficial do Composer
+FROM composer:2 AS composer
+
+# Etapa 2: Imagem principal com PHP + Apache
 FROM php:7.4-apache
 
-# Instala extensões necessárias
+# Instala extensões necessárias do PHP
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Instala o Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Copia o Composer da imagem anterior
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Define o diretório de trabalho
 WORKDIR /var/www/html
@@ -15,7 +19,7 @@ COPY . .
 # Instala as dependências do Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Dá permissão ao Apache para acessar os arquivos
+# Ajusta permissões para o Apache
 RUN chown -R www-data:www-data /var/www/html
 
 # Expõe a porta padrão do Apache
