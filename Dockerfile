@@ -1,10 +1,22 @@
 FROM php:7.4-apache
 
-# Instala as extensões do MySQL necessárias
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Instala extensões necessárias
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Copia o conteúdo do projeto para o Apache
-COPY . /var/www/html/
+# Instala o Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Define o diretório de trabalho
+WORKDIR /var/www/html
+
+# Copia os arquivos do projeto
+COPY . .
+
+# Instala as dependências do Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Dá permissão ao Apache para acessar os arquivos
+RUN chown -R www-data:www-data /var/www/html
 
 # Expõe a porta padrão do Apache
 EXPOSE 80
